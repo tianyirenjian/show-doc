@@ -18,6 +18,10 @@ public class DirectoryService {
         return mapper.findById(id);
     }
 
+    public int create(Directory directory) {
+        return mapper.create(directory);
+    }
+
     public List<Directory> findByPid(Integer pid) {
         return mapper.findByPid(pid);
     }

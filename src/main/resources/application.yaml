@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/show-doc?serverTimezone=UTC&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/show-doc?serverTimezone=PRC&characterEncoding=utf8
     username: root
     password: 123456
 mybatis:
@@ -10,4 +10,4 @@ mybatis:
 logging:
   level:
     com.tianyisoft.showdoc.mapper: debug
-    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+    # org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
