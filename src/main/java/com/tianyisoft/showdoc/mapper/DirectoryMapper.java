@@ -2,13 +2,16 @@ package com.tianyisoft.showdoc.mapper;
 
 import com.tianyisoft.showdoc.entity.Directory;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
+@Repository
 public interface DirectoryMapper {
     List<Directory> findByPid(Integer pid);
 
-    @Insert("insert into directories (name, pid, created_at, updated_at) values (#{name}, #{pid}, #{createdAt}, #{updatedAt})")
+    @Insert("insert into directories (name, pid, createdAt, updatedAt) values (#{name}, #{pid}, #{createdAt}, #{updatedAt})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int create(Directory directory);
 
@@ -17,8 +20,12 @@ public interface DirectoryMapper {
             @Result(id = true, column = "id", property = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "pid", column = "pid"),
-            @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "createdAt", column = "createdAt"),
+            @Result(property = "updatedAt", column = "updatedAt")
     })
     Directory findById(Integer id);
+
+    int update(Map<String, Object> map);
+
+    int delete(List<Integer> id);
 }
