@@ -1,6 +1,7 @@
 package com.tianyisoft.showdoc.entity;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 public class User {
     private Integer id;
     private String username;
+    @JsonIgnore
     private String password;
     private Boolean enabled;
     private LocalDateTime activeUntil;
