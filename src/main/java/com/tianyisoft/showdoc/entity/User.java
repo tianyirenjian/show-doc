@@ -21,11 +21,8 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Boolean enabled;
-    @TableField("activeUntil")
     private LocalDateTime activeUntil;
-    @TableField("createdAt")
     private LocalDateTime createdAt;
-    @TableField("updatedAt")
     private LocalDateTime updatedAt;
 
     public void setPassword(String password) {

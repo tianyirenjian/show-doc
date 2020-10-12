@@ -38,7 +38,7 @@ public class UpdateInterceptor implements Interceptor {
                 if (params.containsKey("changes") && !params.containsKey("withoutAudit")) {
                     Object changes = params.get("changes");
                     if (changes instanceof Map) {
-                        ((Map<String, Object>) changes).put("updatedAt", LocalDateTime.now());
+                        ((Map<String, Object>) changes).put("updated_at", LocalDateTime.now());
                         params.put("changes", changes);
                     }
                 }
