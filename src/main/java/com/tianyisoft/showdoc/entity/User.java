@@ -1,20 +1,31 @@
 package com.tianyisoft.showdoc.entity;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@TableName("users")
 public class User {
+    public static Integer PER_PAGE = 15;
+
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Boolean enabled;
+    @TableField("activeUntil")
     private LocalDateTime activeUntil;
+    @TableField("createdAt")
     private LocalDateTime createdAt;
+    @TableField("updatedAt")
     private LocalDateTime updatedAt;
 
     public void setPassword(String password) {

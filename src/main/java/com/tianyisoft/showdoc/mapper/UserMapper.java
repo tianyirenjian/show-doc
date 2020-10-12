@@ -1,5 +1,6 @@
 package com.tianyisoft.showdoc.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tianyisoft.showdoc.entity.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     @Select("select * from users")
     List<User> list();
 
@@ -26,7 +27,4 @@ public interface UserMapper {
 
     @Delete("delete from users where id = #{id}")
     int delete(Integer id);
-
-    @Select("select * from users where username = #{username}")
-    User findByUsername(String username);
 }
