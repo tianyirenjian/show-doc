@@ -3,7 +3,9 @@ package com.tianyisoft.showdoc.controller;
 import com.tianyisoft.showdoc.entity.Directory;
 import com.tianyisoft.showdoc.service.DirectoryService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.websocket.server.PathParam;
 import java.util.HashMap;
@@ -35,7 +37,11 @@ public class DirectoryController {
     @GetMapping("/directories/{id}")
     @ApiOperation(value = "获取目录详情")
     public Directory show(@PathVariable("id")Integer id) {
-        return directoryService.findById(id);
+        Directory dir = directoryService.findById(id);
+        if (dir == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "目录不存在");
+        }
+        return dir;
     }
 
     @PutMapping("/directories/{id}")
