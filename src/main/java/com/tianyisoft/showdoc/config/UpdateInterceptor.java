@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Component
 @Intercepts(@Signature(
@@ -33,22 +32,11 @@ public class UpdateInterceptor implements Interceptor {
                 }
             }
         } else if (sct.equals(SqlCommandType.UPDATE)) {
-            if (param instanceof Map) {
-                Map<String, Object> params = (Map<String, Object>) param;
-                if (params.containsKey("changes") && !params.containsKey("withoutAudit")) {
-                    Object changes = params.get("changes");
-                    if (changes instanceof Map) {
-                        ((Map<String, Object>) changes).put("updated_at", LocalDateTime.now());
-                        params.put("changes", changes);
-                    }
-                }
-            } else {
-                for (Field field: fields) {
-                    if (field.getName().equals("updatedAt")) {
-                        field.setAccessible(true);
-                        field.set(param, LocalDateTime.now());
-                        field.setAccessible(false);
-                    }
+            for (Field field: fields) {
+                if (field.getName().equals("updatedAt")) {
+                    field.setAccessible(true);
+                    field.set(param, LocalDateTime.now());
+                    field.setAccessible(false);
                 }
             }
         }

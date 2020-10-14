@@ -3,11 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tianyisoft.showdoc.mapper.UserMapper">
-    <update id="update" parameterType="Map">
-        update users set
-        <foreach collection="changes" item="item" index="index" separator=",">
-            ${index} = #{item}
-        </foreach>
-        where id = #{id}
+    <update id="update" parameterType="com.tianyisoft.showdoc.entity.User">
+        update users set username = #{username}, password = #{password}, enabled = #{enabled}, active_until = #{activeUntil}, admin = #{admin}, updated_at = #{updatedAt} where id = #{id}
     </update>
 </mapper>

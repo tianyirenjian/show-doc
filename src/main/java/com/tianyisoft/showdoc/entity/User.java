@@ -23,10 +23,7 @@ public class User {
     private String password;
     private Boolean enabled;
     private LocalDateTime activeUntil;
+    private Boolean admin;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public void setPassword(String password) {
-        this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-    }
 }

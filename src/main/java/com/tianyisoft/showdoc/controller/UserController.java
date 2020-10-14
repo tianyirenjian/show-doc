@@ -1,18 +1,17 @@
 package com.tianyisoft.showdoc.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tianyisoft.showdoc.dto.UserDto;
 import com.tianyisoft.showdoc.entity.User;
 import com.tianyisoft.showdoc.exception.UsernameExistsException;
+import com.tianyisoft.showdoc.group.Create;
+import com.tianyisoft.showdoc.group.Update;
 import com.tianyisoft.showdoc.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.websocket.server.PathParam;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -31,36 +30,21 @@ public class UserController {
 
     @PostMapping("/users")
     @ApiOperation("添加用户")
-    public User create(@RequestBody User user) throws UsernameExistsException {
-        if (userService.countByUsername(user.getUsername(), null) > 0) {
-            throw new UsernameExistsException();
-        }
-        userService.create(user);
-        return userService.find(user.getId());
+    public User create(@RequestBody @Validated(Create.class) UserDto user) throws UsernameExistsException {
+        Integer id = userService.create(user);
+        return userService.find(id);
     }
 
     @GetMapping("/users/{id}")
     @ApiOperation("用户详情")
     public User show(@PathVariable("id") Integer id) {
-        User user = userService.find(id);
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "用户不存在");
-        }
-        return user;
+        return userService.find(id);
     }
 
     @PutMapping("/users/{id}")
     @ApiOperation("修改用户")
-    public User update(@PathVariable("id") Integer id, @RequestBody Map<String, Object> changes) throws UsernameExistsException {
-        if (changes.containsKey("username")) {
-            if (userService.countByUsername((String) changes.get("username"), id) > 0) {
-                throw new UsernameExistsException();
-            }
-        }
-        Map<String, Object> map = new HashMap<>();
-        map.put("changes", changes);
-        map.put("id", id);
-        userService.update(map);
+    public User update(@PathVariable("id") Integer id, @RequestBody @Validated(Update.class) UserDto user) throws UsernameExistsException {
+        userService.update(id, user);
         return userService.find(id);
     }
 

@@ -23,7 +23,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int create(User user);
 
-    int update(Map<String, Object> map);
+    int update(User user);
 
     @Delete("delete from users where id = #{id}")
     int delete(Integer id);
