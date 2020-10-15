@@ -1,8 +1,13 @@
 package com.tianyisoft.showdoc.service;
 
+import com.tianyisoft.showdoc.dto.DirectoryDto;
 import com.tianyisoft.showdoc.entity.Directory;
 import com.tianyisoft.showdoc.mapper.DirectoryMapper;
+import com.tianyisoft.showdoc.utils.Util;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +26,25 @@ public class DirectoryService {
         return mapper.findByPid(pid);
     }
 
-    public int create(Directory directory) {
-        return mapper.create(directory);
+    public int create(DirectoryDto directory) {
+        Directory dir = new Directory();
+        BeanUtils.copyProperties(directory, dir);
+        mapper.create(dir);
+        return dir.getId();
     }
 
     public Directory findById(Integer id) {
-        return mapper.findById(id);
+        Directory dir = mapper.findById(id);
+        if (dir == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "目录不存在");
+        }
+        return dir;
     }
 
-    public int update(Map<String, Object> map) {
-        return mapper.update(map);
+    public int update(Integer id, DirectoryDto directoryDto) {
+        Directory old = findById(id);
+        BeanUtils.copyProperties(directoryDto, old, Util.getNullPropertyNames(directoryDto));
+        return mapper.update(old);
     }
 
     public int delete(Integer id) {

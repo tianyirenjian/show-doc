@@ -12,19 +12,10 @@
         <collection property="children" column="id" ofType="com.tianyisoft.showdoc.entity.Directory" select="findByPid" />
     </resultMap>
     <select id="findByPid" resultMap="directoryWithChildren">
-        <if test="pid != null">
-            select * from directories where pid = #{pid}
-        </if>
-        <if test="pid == null">
-            select * from directories where pid is null
-        </if>
+        select * from directories where pid = #{pid}
     </select>
-    <update id="update" parameterType="Map">
-        update directories set
-        <foreach collection="changes" index="index" item="item" separator=",">
-            ${index} = #{item}
-        </foreach>
-        where id = #{id}
+    <update id="update" parameterType="com.tianyisoft.showdoc.entity.Directory">
+        update directories set name = #{name}, pid = #{pid}, updated_at = #{updatedAt} where id = #{id}
     </update>
     <delete id="delete" parameterType="List">
         delete from directories where id in

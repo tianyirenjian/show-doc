@@ -26,7 +26,7 @@ public interface DirectoryMapper extends BaseMapper<Directory> {
     })
     Directory findById(Integer id);
 
-    int update(Map<String, Object> map);
+    int update(Directory directory);
 
     int delete(List<Integer> id);
 }
