@@ -1,1 +1,0 @@
-alter table users add column admin bit(1) default false;
