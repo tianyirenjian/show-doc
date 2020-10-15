@@ -12,8 +12,6 @@ import java.util.Map;
 public interface DirectoryMapper extends BaseMapper<Directory> {
     List<Directory> findByPid(Integer pid);
 
-    @Insert("insert into directories (name, pid, created_at, updated_at) values (#{name}, #{pid}, #{createdAt}, #{updatedAt})")
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int create(Directory directory);
 
     @Select("select * from directories where id = #{id}")

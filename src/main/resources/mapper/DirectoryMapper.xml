@@ -14,6 +14,23 @@
     <select id="findByPid" resultMap="directoryWithChildren">
         select * from directories where pid = #{pid}
     </select>
+    <insert id="create" parameterType="com.tianyisoft.showdoc.entity.Directory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into directories
+        <trim prefix="(" suffix=")">
+            name,
+            <if test="pid != null">
+                pid,
+            </if>
+            created_at, updated_at
+        </trim>
+        <trim prefix="values (" suffix=")">
+            #{name},
+            <if test="pid != null">
+                #{pid},
+            </if>
+            #{createdAt}, #{updatedAt}
+        </trim>
+    </insert>
     <update id="update" parameterType="com.tianyisoft.showdoc.entity.Directory">
         update directories set name = #{name}, pid = #{pid}, updated_at = #{updatedAt} where id = #{id}
     </update>

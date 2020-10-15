@@ -10,6 +10,5 @@ import javax.validation.constraints.NotNull;
 public class DirectoryDto {
     @NotEmpty(groups = Create.class, message = "目录名不能为空")
     private String name;
-    @NotNull(groups = Create.class, message = "上级目录不能为空")
     private Integer pid;
 }
